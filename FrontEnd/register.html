@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1st - Pagina de inicio</title>
+    <link rel="stylesheet" href="1st.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="header-principal">
+      <div class="header-logo">
+        <img
+          src="Imagenes/85e91e0a-7280-4aea-bb42-c9836994955c.png"
+          alt="CoreTech Logo"
+          class="logo-imagen"
+        />
+        <span class="logo-texto">CORETECH</span>
+      </div>
+      <nav class="menu-navegacion">
+        <a href="FrontEnd/index.html" class="menu-enlace">Inicio</a>
+        <a href="FrontEnd/tienda.html" class="menu-enlace">Tienda</a>
+        <a href="FrontEnd/about-us.html" class="menu-enlace">Sobre nosotros</a>
+        <a href="" class="menu-enlace">Contacto</a>
+      </nav>
+      <div class="header-iconos">
+        <span>🔍</span>
+        <a href="login.html">👤</a>
+        <span class="header-iconos-1">🛒</span>
+      </div>
+    </header>
+    <main class="login">
+      <section class="login-contenedor">
+        <header class="login-header">
+          <div class="login-logo">CORETECH</div>
+          <h1 class="login-titulo">Crear cuenta</h1>
+          <p class="login-subtitulo">
+            Regístrate para gestionar tu cuenta y compras.
+          </p>
+        </header>
+
+        <form class="login-form" action="#" method="post">
+          <label class="campo">
+            <span class="campo-label">Correo</span>
+            <input
+              class="campo-input"
+              type="email"
+              placeholder="tucorreo@ejemplo.com"
+              required
+            />
+          </label>
+
+          <label class="campo">
+            <span class="campo-label">Contraseña</span>
+            <input
+              class="campo-input"
+              type="password"
+              placeholder="••••••••"
+              required
+            />
+          </label>
+
+          <div class="login-opciones">
+            <label class="check">
+              <input type="checkbox" />
+              <span>Recordarme</span>
+            </label>
+
+            <a class="link" href="#">¿Olvidaste tu contraseña?</a>
+          </div>
+
+          <button class="btn btn-principal" type="submit">Crear cuenta</button>
+          <button
+            class="btn btn-secundario"
+            type="button"
+            onclick="window.location.href = 'login.html'"
+          >
+            ¿Ya tienes una cuenta? Inicia sesión
+          </button>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>
