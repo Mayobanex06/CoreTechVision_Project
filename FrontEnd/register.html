@@ -42,7 +42,17 @@
           </p>
         </header>
 
-        <form class="login-form" action="#" method="post">
+        <form class="login-form" action="#" method="post" id="formRegister">
+          <label class="campo">
+            <span class="campo-label">Nombre de Usuario</span>
+            <input
+              class="campo-input"
+              type="text"
+              placeholder="Nombre de usuario"
+              required
+            />
+          </label>
+
           <label class="campo">
             <span class="campo-label">Correo</span>
             <input
@@ -84,4 +94,6 @@
       </section>
     </main>
   </body>
+
+  <script src="auth.js"></script>
 </html>

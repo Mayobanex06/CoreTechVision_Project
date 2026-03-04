@@ -1,11 +1,16 @@
 require("dotenv").config();
 
+console.log("DB_USER:", process.env.DB_USER);
+console.log("DB_PASSWORD existe?:", !!process.env.DB_PASSWORD);
+console.log("DB_NOMBRE:", process.env.DB_NOMBRE);
+
 const express = require("express");
+const app = express();
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
 const crypto = require("crypto");
-const mysql = require("msql2/promise");
+const mysql = require("mysql2/promise");
 
 app.use(express.json());
 app.use(cookieParser());
@@ -23,7 +28,7 @@ const pool = mysql.createPool({
     port: process.env.DB_PORT, 
     user: process.env.DB_USER, 
     password: process.env.DB_PASSWORD,
-    coretech_db: process.env.DB_NOMBRE,
+    database: process.env.DB_NOMBRE,
     waitForConnections: true, 
     connectionLimit: 10,
 
@@ -32,7 +37,7 @@ const pool = mysql.createPool({
 const COOKIE_NAME = "sid"; 
 const session = {}; 
 
-function autentificacionMiddleware(req, res, next){
+function authMiddleware(req, res, next){
     const sind = req.cookies[COOKIE_NAME]; 
 
     if (!sid || !session[sid]){
@@ -48,18 +53,136 @@ function autentificacionMiddleware(req, res, next){
     next();
 }
 
-app.get("/api/funcionamiento", async (req, res) => {
-    try {
-        const [rows] = await pool.query("SELECT 1 AS ok");
-        res.json(rows[0]);
+app.get("/api/health", async (req, res) => {
+  try {
+    const [rows] = await pool.query("SELECT 1 AS ok");
+    res.json(rows[0]); // { ok: 1 }
+  } catch (err) {
+    res.status(500).json({ error: "DB no conecta", detail: String(err.message || err) });
+  }
+});
+
+app.post("/api/register", async (req, res) => {
+  try {
+    const { nombre_completo, nombre_usuario, password } = req.body;
+
+    if (!nombre_completo || !nombre_usuario || !password) {
+      return res.status(400).json({ error: "Faltan datos" });
     }
 
-    catch (err) {
-        res.status(500).json({error: "Error de conexion DB"});
+    const [existing] = await pool.query(
+      "SELECT id_usuarios FROM usuarios WHERE nombre_usuario = ?",
+      [nombre_usuario]
+    );
+
+    if (existing.length > 0) {
+      return res.status(409).json({ error: "Usuario ya existe" });
     }
 
-}); 
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    await pool.query(
+      `INSERT INTO usuarios 
+      (nombre_completo, nombre_usuario, password, rol, estado) 
+      VALUES (?, ?, ?, 'Admin', 1)`,
+      [nombre_completo, nombre_usuario, hashedPassword]
+    );
+
+    res.json({ ok: true });
+
+  } catch (error) {
+    res.status(500).json({ error: "Error en registro" });
+  }
+});
 
 
+app.post("/api/login", async (req, res) => {
+  try {
+    const { nombre_usuario, password } = req.body;
+
+    if (!nombre_usuario || !password) {
+      return res.status(400).json({ error: "Faltan datos" });
+    }
+
+    const [rows] = await pool.query(
+      "SELECT * FROM usuarios WHERE nombre_usuario = ?",
+      [nombre_usuario]
+    );
+
+    if (rows.length === 0) {
+      return res.status(401).json({ error: "Credenciales inválidas" });
+    }
+
+    const user = rows[0];
+
+    if (user.estado !== 1) {
+      return res.status(403).json({ error: "Usuario inactivo" });
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      return res.status(401).json({ error: "Credenciales inválidas" });
+    }
+
+   
+    const sid = crypto.randomBytes(24).toString("hex");
+
+    sessions[sid] = {
+      id_usuario: user.id_usuarios,
+      expiresAt: Date.now() + 24 * 60 * 60 * 1000 
+    };
+
+    
+    await pool.query(
+      "UPDATE usuarios SET ultimo_login = NOW() WHERE id_usuarios = ?",
+      [user.id_usuarios]
+    );
+
+    res.cookie(COOKIE_NAME, sid, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: false
+    });
+
+    res.json({ ok: true });
+
+  } catch (error) {
+    res.status(500).json({ error: "Error en login" });
+  }
+});
+
+
+app.get("/api/me", authMiddleware, async (req, res) => {
+  try {
+    const [rows] = await pool.query(
+      "SELECT id_usuarios, nombre_completo, nombre_usuario, rol, estado, ultimo_login FROM usuarios WHERE id_usuarios = ?",
+      [req.userId]
+    );
+
+    res.json({ ok: true, user: rows[0] });
+
+  } catch (error) {
+    res.status(500).json({ error: "Error al obtener usuario" });
+  }
+});
+
+
+app.post("/api/logout", (req, res) => {
+  const sid = req.cookies[COOKIE_NAME];
+
+  if (sid) {
+    delete sessions[sid];
+  }
+
+  res.clearCookie(COOKIE_NAME);
+  res.json({ ok: true });
+});
+
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});
 
 
