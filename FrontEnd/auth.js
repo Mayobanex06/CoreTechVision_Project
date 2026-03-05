@@ -10,8 +10,8 @@ if (formRegister) {
     e.preventDefault();
 
     const body = {
-      nombre_completo: formRegister.nombre_completo.value.trim(),
-      nombre_usuario: formRegister.nombre_usuario.value.trim(),
+      nombre: formRegister.nombre.value.trim(),
+      email: formRegister.email.value.trim(),
       password: formRegister.password.value
     };
 
@@ -42,7 +42,7 @@ if (formLogin) {
     e.preventDefault();
 
     const body = {
-      nombre_usuario: formLogin.nombre_usuario.value.trim(),
+      email: formLogin.email.value.trim(),
       password: formLogin.password.value
     };
 
@@ -60,6 +60,6 @@ if (formLogin) {
       return;
     }
 
-    window.location.href = "dashboard.html";
+    window.location.href = "home.html";
   });
 }

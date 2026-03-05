@@ -1,9 +1,4 @@
 require("dotenv").config();
-
-console.log("DB_USER:", process.env.DB_USER);
-console.log("DB_PASSWORD existe?:", !!process.env.DB_PASSWORD);
-console.log("DB_NOMBRE:", process.env.DB_NOMBRE);
-
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -13,6 +8,7 @@ const crypto = require("crypto");
 const mysql = require("mysql2/promise");
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors({
 
@@ -35,7 +31,7 @@ const pool = mysql.createPool({
 }); 
 
 const COOKIE_NAME = "sid"; 
-const session = {}; 
+const sessions = {}; 
 
 function authMiddleware(req, res, next){
     const sind = req.cookies[COOKIE_NAME]; 
@@ -56,7 +52,7 @@ function authMiddleware(req, res, next){
 app.get("/api/health", async (req, res) => {
   try {
     const [rows] = await pool.query("SELECT 1 AS ok");
-    res.json(rows[0]); // { ok: 1 }
+    res.json(rows[0]); 
   } catch (err) {
     res.status(500).json({ error: "DB no conecta", detail: String(err.message || err) });
   }
@@ -64,15 +60,15 @@ app.get("/api/health", async (req, res) => {
 
 app.post("/api/register", async (req, res) => {
   try {
-    const { nombre_completo, nombre_usuario, password } = req.body;
+    const { nombre, email, password } = req.body;
 
-    if (!nombre_completo || !nombre_usuario || !password) {
+    if (!nombre || !email || !password) {
       return res.status(400).json({ error: "Faltan datos" });
     }
 
     const [existing] = await pool.query(
-      "SELECT id_usuarios FROM usuarios WHERE nombre_usuario = ?",
-      [nombre_usuario]
+      "SELECT id_usuarios FROM usuarios WHERE nombre = ?",
+      [nombre]
     );
 
     if (existing.length > 0) {
@@ -83,30 +79,35 @@ app.post("/api/register", async (req, res) => {
 
     await pool.query(
       `INSERT INTO usuarios 
-      (nombre_completo, nombre_usuario, password, rol, estado) 
+      (nombre, email, password, rol, estado) 
       VALUES (?, ?, ?, 'Admin', 1)`,
-      [nombre_completo, nombre_usuario, hashedPassword]
+      [nombre, email, hashedPassword]
     );
 
     res.json({ ok: true });
 
-  } catch (error) {
-    res.status(500).json({ error: "Error en registro" });
-  }
+  } catch (err) {
+  console.error("REGISTER ERROR >>>", err); 
+  return res.status(500).json({
+    error: "Error en registro",
+    detalle: err.message,
+    code: err.code,
+  });
+}
 });
 
 
 app.post("/api/login", async (req, res) => {
   try {
-    const { nombre_usuario, password } = req.body;
+    const { email, password } = req.body;
 
-    if (!nombre_usuario || !password) {
+    if (!email || !password) {
       return res.status(400).json({ error: "Faltan datos" });
     }
 
     const [rows] = await pool.query(
-      "SELECT * FROM usuarios WHERE nombre_usuario = ?",
-      [nombre_usuario]
+      "SELECT * FROM usuarios WHERE email = ?",
+      [email]
     );
 
     if (rows.length === 0) {
@@ -147,16 +148,21 @@ app.post("/api/login", async (req, res) => {
 
     res.json({ ok: true });
 
-  } catch (error) {
-    res.status(500).json({ error: "Error en login" });
-  }
-});
+  } catch (err) {
+    console.error("LOGIN ERROR >>>", err); 
+    return res.status(500).json({
+    error: "Error en login",
+    detalle: err.message,
+    code: err.code,
+  });
+}
+  });
 
 
 app.get("/api/me", authMiddleware, async (req, res) => {
   try {
     const [rows] = await pool.query(
-      "SELECT id_usuarios, nombre_completo, nombre_usuario, rol, estado, ultimo_login FROM usuarios WHERE id_usuarios = ?",
+      "SELECT id_usuarios, nombre, email, rol, estado, ultimo_login FROM usuarios WHERE id_usuarios = ?",
       [req.userId]
     );
 
@@ -165,6 +171,20 @@ app.get("/api/me", authMiddleware, async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Error al obtener usuario" });
   }
+});
+
+app.get("/api/me", (req, res) => {
+
+  const sid = req.cookies.sid;
+
+  if (!sid || !sessions[sid]) {
+    return res.status(401).json({ error: "No autenticado" });
+  }
+
+  res.json({
+    id_usuario: sessions[sid].id_usuario
+  });
+
 });
 
 

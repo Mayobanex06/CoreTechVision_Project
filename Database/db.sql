@@ -1,11 +1,11 @@
 
-CREATE DATABASE IF NOT EXISTS tienda_celulares;
-USE tienda_celulares;
+CREATE DATABASE IF NOT EXISTS coretech_db;
+USE coretech_db;
 
 CREATE TABLE usuarios (
     id_usuarios INT AUTO_INCREMENT PRIMARY KEY,
-    nombre_completo VARCHAR(100) NOT NULL,
-    nombre_usuario VARCHAR(50) NOT NULL UNIQUE,
+    nombre VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(50) NOT NULL UNIQUE, 
     password VARCHAR(255) NOT NULL,
     rol ENUM('Admin') NOT NULL,
     estado TINYINT(1) DEFAULT 1,
