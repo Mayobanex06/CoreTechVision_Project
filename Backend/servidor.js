@@ -141,9 +141,11 @@ app.post("/api/login", async (req, res) => {
     );
 
     res.cookie(COOKIE_NAME, sid, {
-      httpOnly: true,
-      sameSite: "lax",
-      secure: false
+    httpOnly: true,
+    sameSite: "lax",
+    secure: false,
+    maxAge: 24 * 60 * 60 * 1000,
+    path: "/"
     });
 
     res.json({ ok: true });
