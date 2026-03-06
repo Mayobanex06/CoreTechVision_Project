@@ -31,6 +31,8 @@ if (formRegister) {
 
     mensaje.textContent = "Registro exitoso";
     formRegister.reset();
+
+    window.location.href = "login.html";
   });
 }
 
@@ -60,6 +62,7 @@ if (formLogin) {
       return;
     }
 
-    window.location.href = "home.html";
+    window.location.href = "index.html";
   });
 }
+

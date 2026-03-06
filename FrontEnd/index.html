@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>1st - Pagina de inicio</title>
+    <title>Pagina de inicio</title>
+    <link rel="icon" type="image/png" href="Imagenes/faviinco.png" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="1st.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
@@ -12,7 +14,7 @@
   </head>
   <body>
     <header class="header-principal">
-      <div class="header-logo">
+      <div class="header-logo" data-aos="fade-right" data-aos-duration="1000">
         <img
           src="Imagenes/85e91e0a-7280-4aea-bb42-c9836994955c.png"
           alt="CoreTech Logo"
@@ -20,13 +22,17 @@
         />
         <span class="logo-texto">CORETECH</span>
       </div>
-      <nav class="menu-navegacion">
+      <nav
+        class="menu-navegacion"
+        data-aos="fade-down"
+        data-aos-duration="1000"
+      >
         <a href="index.html" class="menu-enlace">Inicio</a>
         <a href="tienda.html" class="menu-enlace">Tienda</a>
         <a href="about-us.html" class="menu-enlace">Sobre nosotros</a>
         <a href="" class="menu-enlace">Contacto</a>
       </nav>
-      <div class="header-iconos">
+      <div class="header-iconos" data-aos="fade-left" data-aos-duration="1000">
         <span>🔍</span>
         <a href="login.html">👤</a>
         <span class="header-iconos-1">🛒</span>
@@ -64,7 +70,11 @@
         productos premium y un servicio excepcional.
       </p>
 
-      <div class="seccion-2-caracteristicas">
+      <div
+        class="seccion-2-caracteristicas"
+        data-aos="fade-down"
+        data-aos-duration="1000"
+      >
         <div class="seccion-2-tarjeta">
           <div class="seccion-2-icono">🛡️</div>
           <h3>Garantía de 2 años</h3>
@@ -177,20 +187,7 @@
       </div>
     </footer>
   </body>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="./general.js"></script>
-  <script>
-    const API = "http://localhost:3000";
-
-    async function verificarSesion() {
-      const response = await fetch(API + "/api/me", {
-        credentials: "include",
-      });
-
-      if (!response.ok) {
-        window.location.href = "login.html";
-      }
-    }
-
-    verificarSesion();
-  </script>
 </html>

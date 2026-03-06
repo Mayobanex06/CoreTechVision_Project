@@ -34,9 +34,9 @@ const COOKIE_NAME = "sid";
 const sessions = {}; 
 
 function authMiddleware(req, res, next){
-    const sind = req.cookies[COOKIE_NAME]; 
+    const sid = req.cookies[COOKIE_NAME]; 
 
-    if (!sid || !session[sid]){
+    if (!sid || !sessions[sid]){
         return res.status(401).json({error: "No autentificado"});
     }
 
@@ -170,23 +170,20 @@ app.get("/api/me", authMiddleware, async (req, res) => {
 
     res.json({ ok: true, user: rows[0] });
 
+    const sid = req.cookies.sid;
+
+    if (!sid || !sessions[sid]) {
+    return res.status(401).json({ error: "No autenticado" });
+    }
+
+    res.json({
+    id_usuario: sessions[sid].id_usuario
+    });
+
   } catch (error) {
     res.status(500).json({ error: "Error al obtener usuario" });
   }
-});
-
-app.get("/api/me", (req, res) => {
-
-  const sid = req.cookies.sid;
-
-  if (!sid || !sessions[sid]) {
-    return res.status(401).json({ error: "No autenticado" });
-  }
-
-  res.json({
-    id_usuario: sessions[sid].id_usuario
-  });
-
+  
 });
 
 
