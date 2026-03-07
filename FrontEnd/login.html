@@ -10,8 +10,13 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   </head>
-  <body>
+  <body class="body-login">
     <header class="header-principal">
       <div class="header-logo">
         <img
@@ -27,14 +32,26 @@
         <a href="about-us.html" class="menu-enlace">Sobre nosotros</a>
         <a href="" class="menu-enlace">Contacto</a>
       </nav>
-      <div class="header-iconos">
-        <span>🔍</span>
-        <a href="login.html">👤</a>
-        <span class="header-iconos-1">🛒</span>
+      <div class="header-iconos" data-aos="fade-left" data-aos-duration="1000">
+        <a href="">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </a>
+
+        <a href="login.html">
+          <i class="fa-solid fa-user"></i>
+        </a>
+
+        <a href="tienda.html">
+          <i class="fa-solid fa-cart-shopping"></i>
+        </a>
       </div>
     </header>
     <main class="login">
-      <section class="login-contenedor">
+      <section
+        class="login-contenedor"
+        data-aos="fade-down"
+        data-aos-duration="1000"
+      >
         <header class="login-header">
           <div class="login-logo">CORETECH</div>
           <h1 class="login-titulo">Iniciar sesión</h1>
@@ -91,9 +108,19 @@
         </form>
         <p id="mensaje"></p>
       </section>
+      <div>
+        <p class="login-beneficios">
+          <span data-aos="fade-right" data-aos-duration="1000"
+            ><i class="fa-solid fa-truck"></i> Envíos rápidos
+          </span>
+          <span data-aos="fade-left" data-aos-duration="1000"
+            ><i class="fa-solid fa-shield-alt"></i> Pagos seguros</span
+          >
+        </p>
+      </div>
     </main>
   </body>
-
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="./auth.js"></script>
   <script src="./general.js"></script>
 </html>

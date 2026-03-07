@@ -2,7 +2,6 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
 const crypto = require("crypto");
 const mysql = require("mysql2/promise");
@@ -75,13 +74,11 @@ app.post("/api/register", async (req, res) => {
       return res.status(409).json({ error: "Usuario ya existe" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     await pool.query(
       `INSERT INTO usuarios 
       (nombre, email, password, rol, estado) 
-      VALUES (?, ?, ?, 'Admin', 1)`,
-      [nombre, email, hashedPassword]
+      VALUES (?, ?, ?, 'User', 1)`,
+      [nombre, email, password]
     );
 
     res.json({ ok: true });
@@ -120,7 +117,7 @@ app.post("/api/login", async (req, res) => {
       return res.status(403).json({ error: "Usuario inactivo" });
     }
 
-    const passwordMatch = await bcrypt.compare(password, user.password);
+    const passwordMatch = password === user.password;
 
     if (!passwordMatch) {
       return res.status(401).json({ error: "Credenciales inválidas" });
