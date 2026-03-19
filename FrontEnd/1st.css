@@ -992,3 +992,7 @@ color:#1E73BE;
   font-weight: 600;
   cursor: pointer;
 }
+
+.oculto{
+  display: none; 
+}
