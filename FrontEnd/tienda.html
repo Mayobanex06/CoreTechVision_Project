@@ -16,7 +16,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
   </head>
-  <body>
+  <body class="body-tienda">
     <header class="header-principal">
       <div class="header-logo">
         <img
@@ -47,100 +47,191 @@
       </div>
     </header>
     <main>
-      <div class="seccion-6">
-        <img src="Imagenes/galaxy-s25-ultra-features-kv.jpg" alt="Samsung" />
-        <div
-          class="seccion-6-contenido"
-          data-aos="fade-up"
-          data-aos-duration="1000"
-        >
-          <h1>Descubre lo ultimo en tecnologia Samsung</h1>
-          <p>
-            El Samsung Galaxy S25 combina diseño elegante, alto rendimiento y
-            Galaxy AI, ofreciendo una experiencia rápida, inteligente y fluida,
-            ideal para el uso diario y la productividad.
-          </p>
-        </div>
-      </div>
-
-      <h1 class="titulo-1">Explora Samsung Galaxy</h1>
-      <div class="linea-divisora"></div>
-      <section class="seccion-7">
-        <div class="producto" data-aos="fade-right" data-aos-duration="1000">
+      <section class="tienda-seccion-1">
+        <div class="tienda-contenedor-1">
+          <h1>Encuentra tu proximo Smarthphone</h1>
+          <p>Los mejores dispositivos Samsung, Apple y Xiaomi</p>
           <img
-            src="Imagenes/sm-f966_all-name_1_1.png"
-            alt="Galaxy Z Fold7"
-            class="producto-imagen"
+            src="Imagenes/f82708e6-22da-44f0-8607-fb64c1353fbf.png"
+            alt="Smarthphone"
           />
-
-          <h3 class="producto-nombre">Galaxy Z Fold7</h3>
-
-          <p class="producto-color">Color: Jetblack</p>
-
-          <div class="producto-memoria">
-            <span class="memoria">1TB</span>
-            <span class="memoria">512GB</span>
-            <span class="memoria">256GB</span>
-          </div>
-
-          <button class="btn-principal">Dónde comprar</button>
-          <button class="btn-secundario">Más información</button>
         </div>
-        <div class="producto" data-aos="fade-up" data-aos-duration="1000">
-          <img
-            src="Imagenes/3351064-1__1741045029.png"
-            alt="Galaxy Z Fold7"
-            class="producto-imagen"
-          />
+        <section class="tienda-seccion-2">
+          <div class="tienda-contenedor-2">
+            <div class="filtros-header">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <h3>Filtros</h3>
+            </div>
 
-          <h3 class="producto-nombre">Samsung Galaxy S25 Ultra</h3>
+            <div class="filtros-bloque">
+              <div class="filtros-titulo">
+                <h4>Marca</h4>
+                <i class="fa-solid fa-angle-up"></i>
+              </div>
 
-          <p class="producto-color">Color: Jetblack</p>
+              <form class="filtro-marcas">
+                <label class="opcion">
+                  <input type="checkbox" name="marca" value="Samsung" />
+                  <span class="cuadro"></span>
+                  <span class="texto-opcion">Samsung</span>
+                </label>
 
-          <div class="producto-memoria">
-            <span class="memoria">1TB</span>
-            <span class="memoria">512GB</span>
-            <span class="memoria">256GB</span>
+                <label class="opcion">
+                  <input type="checkbox" name="marca" value="Apple" />
+                  <span class="cuadro"></span>
+                  <span class="texto-opcion">Apple</span>
+                </label>
+
+                <label class="opcion">
+                  <input type="checkbox" name="marca" value="Xiaomi" />
+                  <span class="cuadro"></span>
+                  <span class="texto-opcion">Xiaomi</span>
+                </label>
+
+                <label class="opcion">
+                  <input type="checkbox" name="marca" value="Google Pixel" />
+                  <span class="cuadro"></span>
+                  <span class="texto-opcion">Google Pixel</span>
+                </label>
+              </form>
+            </div>
+
+            <div class="filtros-bloque">
+              <div class="filtros-titulo">
+                <h4>Precio</h4>
+                <i class="fa-solid fa-angle-down"></i>
+              </div>
+
+              <form class="filtro-marcas">
+                <label class="opcion">
+                  <input type="checkbox" name="precio" value="1000-20000" />
+                  <span class="cuadro"></span>
+                  <span class="texto-opcion">RD$1,000 - $20,000</span>
+                </label>
+
+                <label class="opcion">
+                  <input type="checkbox" name="precio" value="20000-40000" />
+                  <span class="cuadro"></span>
+                  <span class="texto-opcion">RD$2,000 - $40,000</span>
+                </label>
+
+                <label class="opcion">
+                  <input type="checkbox" name="precio" value="40000+" />
+                  <span class="cuadro"></span>
+                  <span class="texto-opcion">RD$40,00+</span>
+                </label>
+              </form>
+            </div>
+
+            <div class="filtros-bloque">
+              <div class="filtros-titulo">
+                <h4>Almacenamiento</h4>
+                <i class="fa-solid fa-angle-down"></i>
+              </div>
+
+              <form class="filtro-marcas">
+                <label class="opcion">
+                  <input type="checkbox" name="almacenamiento" value="128GB" />
+                  <span class="cuadro"></span>
+                  <span class="texto-opcion">128GB</span>
+                </label>
+
+                <label class="opcion">
+                  <input type="checkbox" name="almacenamiento" value="256GB" />
+                  <span class="cuadro"></span>
+                  <span class="texto-opcion">256GB</span>
+                </label>
+
+                <label class="opcion">
+                  <input type="checkbox" name="almacenamiento" value="1TB" />
+                  <span class="cuadro"></span>
+                  <span class="texto-opcion">1TB</span>
+                </label>
+              </form>
+            </div>
           </div>
-
-          <button class="btn-principal">Dónde comprar</button>
-          <button class="btn-secundario">Más información</button>
-        </div>
-        <div class="producto" data-aos="fade-left" data-aos-duration="1000">
-          <img
-            src="Imagenes/51+tXs+7RcL._AC_UF894,1000_QL80_.png"
-            alt="Galaxy Z Fold7"
-            class="producto-imagen"
-          />
-
-          <h3 class="producto-nombre">Samsung Galaxy Z Flip6</h3>
-
-          <p class="producto-color">Color: Jetblack</p>
-
-          <div class="producto-memoria">
-            <span class="memoria">1TB</span>
-            <span class="memoria">512GB</span>
-            <span class="memoria">256GB</span>
+        </section>
+        <section class="tienda-seccion-3">
+          <div class="tienda-subcontenedor-3">
+            <div class="tienda-buscador">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input
+                name="search"
+                type="text"
+                placeholder="Buscar productos..."
+              />
+            </div>
+            <div class="tienda-ordenar">
+              <label for="ordenar">Ordenar por:</label>
+              <select name="ordenar" id="ordenar">
+                <option value="precio-asc">Precio: Menor a Mayor</option>
+                <option value="precio-desc">Precio: Mayor a Menor</option>
+                <option value="nuevo">Nuevos Lanzamientos</option>
+              </select>
+            </div>
           </div>
+          <div class="barra-categorias">
+            <div class="categorias">
+              <button class="categoria">Todo</button>
+              <button class="categoria">Samsung</button>
+              <button class="categoria">Apple</button>
+              <button class="categoria">Xiaomi</button>
+              <button class="categoria">Accesorios</button>
+            </div>
 
-          <button class="btn-principal">Dónde comprar</button>
-          <button class="btn-secundario">Más información</button>
-        </div>
-      </section>
-      <section>
-        <div class="seccion-8">
-          <img
-            src="Imagenes/mockup-free-6VC1KqhWdqc-unsplash (1).jpg"
-            alt=""
-            class="img-seccion-8"
-          />
-          <div class="seccion-8-contenido">
-            <h1>Nuevas novedades en telefonos IPhone.</h1>
+            <p class="resultado-texto">Mostrando ? productos</p>
           </div>
-        </div>
+          <div class="tienda-subcontenedor-4">
+            <div class="producto-card">
+              <div class="producto-imagen">
+                <img
+                  src="Imagenes/Screenshot 2026-03-16 155818.png"
+                  alt="Samsung Galaxy Z Fold7"
+                />
+              </div>
+
+              <div class="producto-info">
+                <p class="marca">Samsung</p>
+                <h3 class="nombre">Galaxy Z Fold7</h3>
+
+                <p class="precio">RD$1,299.99</p>
+
+                <div class="memorias">
+                  <button class="chip">256GB</button>
+                  <button class="chip">512GB</button>
+                </div>
+
+                <button class="btn-carrito">Agregar al carrito</button>
+              </div>
+            </div>
+            <div class="producto-card">
+              <div class="producto-imagen">
+                <img
+                  src="Imagenes/Screenshot 2026-03-16 155818.png"
+                  alt="Samsung Galaxy Z Fold7"
+                />
+              </div>
+
+              <div class="producto-info">
+                <p class="marca">Samsung</p>
+                <h3 class="nombre">Galaxy Z Fold7</h3>
+
+                <p class="precio">RD$1,299.99</p>
+
+                <div class="memorias">
+                  <button class="chip">256GB</button>
+                  <button class="chip">512GB</button>
+                </div>
+
+                <button class="btn-carrito">Agregar al carrito</button>
+              </div>
+            </div>
+          </div>
+        </section>
       </section>
     </main>
   </body>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="./general.js"></script>
+  <script src="./tienda.js"></script>
 </html>
