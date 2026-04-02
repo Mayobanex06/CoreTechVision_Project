@@ -39,7 +39,7 @@ function authMiddleware(req, res, next){
         return res.status(401).json({error: "No autentificado"});
     }
 
-    if(Data.now() > sessions[sid].expiresAt){
+    if(Date.now() > sessions[sid].expiresAt){
         delete sessions[sid];
         return res.status(401).json({error: "Sesion expirada"});
     }
@@ -165,22 +165,14 @@ app.get("/api/me", authMiddleware, async (req, res) => {
       [req.userId]
     );
 
-    res.json({ ok: true, user: rows[0] });
-
-    const sid = req.cookies.sid;
-
-    if (!sid || !sessions[sid]) {
-    return res.status(401).json({ error: "No autenticado" });
+    if (rows.length === 0) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
     }
 
-    res.json({
-    id_usuario: sessions[sid].id_usuario
-    });
-
+    res.json({ ok: true, user: rows[0] });
   } catch (error) {
     res.status(500).json({ error: "Error al obtener usuario" });
   }
-  
 });
 
 

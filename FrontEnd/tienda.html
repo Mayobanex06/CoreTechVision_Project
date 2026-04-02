@@ -33,12 +33,19 @@
         <a href="" class="menu-enlace">Contacto</a>
       </nav>
       <div class="header-iconos" data-aos="fade-left" data-aos-duration="1000">
+        
+        <div class="user-menu">
+          <button id="userBtn" class="user-btn" type="button">
+            <i class="fa-solid fa-user"></i>
+          </button>
+
+          <div id="userCard" class="user-card oculto">
+            <p>Cargando...</p>
+          </div>
+        </div>
+        
         <a href="">
           <i class="fa-solid fa-magnifying-glass"></i>
-        </a>
-
-        <a href="login.html">
-          <i class="fa-solid fa-user"></i>
         </a>
 
         <a href="tienda.html">
@@ -195,4 +202,9 @@
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="./general.js"></script>
   <script src="./tienda.js"></script>
+  <script>
+    AOS.init({
+      once: true,
+    });
+  </script>
 </html>

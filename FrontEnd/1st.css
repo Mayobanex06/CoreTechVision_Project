@@ -242,6 +242,7 @@ body {
   color: #1f3a6e;  
 }
 
+
 .header-iconos a:hover{
   color: #4c6fff;
   transform: scale(1.1);
@@ -995,4 +996,65 @@ color:#1E73BE;
 
 .oculto{
   display: none; 
+}
+
+.user-menu {
+  position: relative;
+}
+
+.user-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #1f3a6e;
+}
+
+.user-card {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  width: 260px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  padding: 16px;
+  z-index: 1000;
+}
+
+.user-card h4 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  color: #111827;
+}
+
+.user-card p {
+  margin: 6px 0;
+  font-size: 14px;
+  color: #4b5563;
+}
+
+.user-card .btn-user {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background: #1E73BE;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.user-card .btn-user-sec {
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px;
+  border: 1px solid #1E73BE;
+  border-radius: 10px;
+  background: white;
+  color: #1E73BE;
+  cursor: pointer;
+  font-weight: 600;
 }
