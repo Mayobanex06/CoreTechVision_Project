@@ -7,46 +7,31 @@ CREATE TABLE usuarios (
     nombre VARCHAR(50) NOT NULL UNIQUE,
     email VARCHAR(50) NOT NULL UNIQUE, 
     password VARCHAR(255) NOT NULL,
-    rol ENUM('Admin') NOT NULL,
+    rol ENUM('Admin', 'User') NOT NULL,
     estado TINYINT(1) DEFAULT 1,
     ultimo_login DATETIME
 );
-CREATE TABLE inventario_celulares (
-    id_celulares INT AUTO_INCREMENT PRIMARY KEY,
-    marca VARCHAR(50) NOT NULL,
-    modelo VARCHAR(50) NOT NULL,
-    imei VARCHAR(20) NOT NULL UNIQUE,
-    color VARCHAR(30),
-    precio_venta DECIMAL(10, 2) NOT NULL,
-    estado_stock ENUM('Disponible', 'Vendido', 'Garantia') DEFAULT 'Disponible'
+
+SELECT * FROM usuarios; 
+
+DELETE FROM usuarios
+WHERE id_usuarios > 0; 
+
+CREATE TABLE productos (
+ id_producto INT AUTO_INCREMENT PRIMARY KEY,
+  marca VARCHAR(100) NOT NULL,
+  nombre VARCHAR(150) NOT NULL,
+  precio DECIMAL(10,2) NOT NULL,
+  imagen VARCHAR(255) NOT NULL,
+  categoria VARCHAR(100) NOT NULL,
+  stock INT NOT NULL DEFAULT 0,
+  estado TINYINT NOT NULL DEFAULT 1
 );
 
-CREATE TABLE ventas (
-    id_venta INT AUTO_INCREMENT PRIMARY KEY,
-    id_celulares INT NOT NULL,
-    id_usuarios INT NOT NULL,
-    nombre_cliente VARCHAR(100),
-    precio_final DECIMAL(10, 2),
-    fecha_venta TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    
-    FOREIGN KEY (id_usuarios) REFERENCES usuarios(id_usuarios),
-    FOREIGN KEY (id_celulares) REFERENCES inventario_celulares(id_celulares)
-);
-(DELIMITER //
-CREATE TRIGGER actualizar_stock_venta
-AFTER INSERT ON ventas
-FOR EACH ROW
-BEGIN
-UPDATE invetario_celulares
-SET estado_stock = 'vendido'
-WHERE id_celuares = NEW.id_celulares;
-END //
-DELIMITER //)
+INSERT INTO productos (marca, nombre, precio, imagen, categoria, stock, estado) VALUES
+('Samsung', 'Galaxy Z Fold7', 1299.99, 'Imagenes/fold7.png', 'Samsung', 8, 1),
+('Samsung', 'Galaxy S25 Ultra', 64999.99, 'Imagenes/s25ultra.png', 'Samsung', 5, 1),
+('Apple', 'iPhone 16 Pro Max', 74999.99, 'Imagenes/iphone16promax.png', 'Apple', 6, 1),
+('Xiaomi', 'Xiaomi 14 Ultra', 55999.99, 'Imagenes/xiaomi14ultra.png', 'Xiaomi', 4, 1);
 
-CREATE VIEW reporte_diario AS
-SELECT
-DATE(fecha_venta) as fecha,
-COUNT(id_ventas) as Equipos_Vendidos,
-SUM(precio_final) as Total_caja
-FROM ventas
-GROUP BY DATE (fecha_venta);
+SELECT * FROM productos; 
