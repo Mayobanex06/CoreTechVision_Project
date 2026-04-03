@@ -57,6 +57,7 @@ async function obtenerProductos() {
   try {
     const response = await fetch("http://localhost:3000/api/productos");
     const data = await response.json();
+    const mensaje = document.getElementById("mensaje-productos")
 
     if (!response.ok || !data.ok) {
       throw new Error(data.error || "No se pudieron cargar los productos");
@@ -64,6 +65,8 @@ async function obtenerProductos() {
 
     productos = data.productos;
     cargarProductos(productos);
+
+    mensaje.classList.add("oculto")
 
   } catch (error) {
     console.error("ERROR CARGANDO PRODUCTOS >>>", error);
@@ -75,38 +78,28 @@ obtenerProductos();
 
 // Bloque 4: Logica detras del filtro por marca
 
-const categorias = document.querySelectorAll(".categoria")
+const categorias = document.querySelectorAll(".categoria");
 
 categorias.forEach(cat => {
-    cat.addEventListener("click", () => {
+  cat.addEventListener("click", () => {
 
-        categorias.forEach(c => c.classList.remove("categoria-activa"))
+    categorias.forEach(c => c.classList.remove("categoria-activa"));
+    cat.classList.add("categoria-activa");
 
-        cat.classList.add("categoria-activa")
-    })
-})
+    const categoriaSeleccionada = cat.dataset.categoria;
 
-const producto = document.querySelectorAll(".producto-card")
+    const productos = document.querySelectorAll(".producto-card");
 
-categorias.forEach(cat2 => {
-    
-cat2.addEventListener("click", () => {
+    productos.forEach(pro => {
+      const productoCategoria = pro.dataset.categoria;
 
-    const categoriaSeleccionada = cat2.dataset.categoria
-    
-        producto.forEach(pro => {
+      if (categoriaSeleccionada === "all" || categoriaSeleccionada === productoCategoria) {
+        pro.classList.remove("oculto");
+      } else {
+        pro.classList.add("oculto");
+      }
+    });
 
-            const productoCategoria = pro.dataset.categoria
-
-            if(categoriaSeleccionada === "all" || categoriaSeleccionada === productoCategoria){
-            pro.classList.remove("oculto")
-        
-            } else {
-            pro.classList.add("oculto")
-            }
-        })
-    })
-})
-
-
+  });
+});
 
