@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel Admin</title>
+    <link rel="icon" type="image/png" href="Imagenes/faviinco.png" />
+    <link rel="stylesheet" href="1st.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+  <body class="body-admin">
+    <header class="header-principal">
+      <div class="header-logo">
+        <img
+          src="Imagenes/85e91e0a-7280-4aea-bb42-c9836994955c.png"
+          alt="CoreTech Logo"
+          class="logo-imagen"
+        />
+        <span class="logo-texto">CORETECH</span>
+      </div>
+
+      <nav class="menu-navegacion">
+        <a href="index.html" class="menu-enlace">Inicio</a>
+        <a href="tienda.html" class="menu-enlace">Tienda</a>
+        <a href="about-us.html" class="menu-enlace">Sobre nosotros</a>
+        <a href="" class="menu-enlace">Contacto</a>
+      </nav>
+
+      <div class="header-iconos">
+        <div class="user-menu">
+          <button id="userBtn" class="user-btn" type="button">
+            <i class="fa-solid fa-user"></i>
+          </button>
+
+          <div id="userCard" class="user-card oculto">
+            <p>Cargando...</p>
+          </div>
+        </div>
+
+        <a href="">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </a>
+
+        <a href="tienda.html">
+          <i class="fa-solid fa-cart-shopping"></i>
+        </a>
+
+        <a href="admin.html">
+          <i class="fa-solid fa-gear"></i>
+        </a>
+      </div>
+    </header>
+
+    <main class="admin-seccion-1">
+      <section class="admin-contenedor-1">
+        <div class="admin-bienvenida">
+          <div>
+            <p class="admin-etiqueta">Panel administrativo</p>
+            <h1>Gestiona productos, usuarios y actividad del sistema</h1>
+            <p class="admin-descripcion">
+              Desde aquí podrás supervisar el inventario, revisar usuarios y
+              controlar los datos principales del sitio.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="admin-seccion-2">
+        <div class="admin-resumen">
+          <div class="admin-card-resumen">
+            <p>Total productos</p>
+            <h3 id="totalProductos">0</h3>
+          </div>
+
+          <div class="admin-card-resumen">
+            <p>Usuarios activos</p>
+            <h3 id="usuariosActivos">0</h3>
+          </div>
+
+          <div class="admin-card-resumen">
+            <p>Órdenes hoy</p>
+            <h3 id="ordenesHoy">0</h3>
+          </div>
+
+          <div class="admin-card-resumen">
+            <p>Stock bajo</p>
+            <h3 id="stockBajo">0</h3>
+          </div>
+        </div>
+      </section>
+
+      <section class="admin-seccion-3">
+        <aside class="admin-panel-lateral">
+          <div class="admin-panel admin-panel-menu">
+            <h3>Administración</h3>
+            <button class="admin-opcion admin-opcion-activa">Productos</button>
+            <button class="admin-opcion">Usuarios</button>
+            <button class="admin-opcion">Ventas</button>
+            <button class="admin-opcion">Reportes</button>
+            <button class="admin-opcion">Configuración</button>
+          </div>
+        </aside>
+
+        <div class="admin-panel-principal">
+          <div class="admin-panel">
+            <div class="admin-panel-header">
+              <h3>Gestión de productos</h3>
+
+              <div class="admin-filtros">
+                <div class="admin-buscador">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                  <input
+                    id="adminSearch"
+                    type="text"
+                    placeholder="Buscar producto..."
+                  />
+                </div>
+
+                <select id="adminMarca" class="admin-select">
+                  <option value="todas">Todas las marcas</option>
+                  <option value="Samsung">Samsung</option>
+                  <option value="Apple">Apple</option>
+                  <option value="Xiaomi">Xiaomi</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="admin-tabla">
+              <div class="admin-tabla-head">
+                <span>ID</span>
+                <span>Producto</span>
+                <span>Marca</span>
+                <span>Precio</span>
+                <span>Stock</span>
+                <span>Estado</span>
+                <span>Acciones</span>
+              </div>
+
+              <div id="adminTablaBody"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="./admin.js"></script>
+    <script src="./general.js"></script>
+  </body>
+</html>

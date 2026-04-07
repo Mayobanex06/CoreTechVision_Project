@@ -1,25 +1,27 @@
 
 // Esta es la tarjetita de usuario
 
-const API = "http://localhost:3000";
+window.API_BASE = "http://localhost:3000";
 
-const userBtn = document.getElementById("userBtn");
-const userCard = document.getElementById("userCard");
+const API = window.API_BASE
+
+const userBtn = document.getElementById("userBtn")
+const userCard = document.getElementById("userCard")
 
 if (userBtn && userCard) {
   userBtn.addEventListener("click", async () => {
-    userCard.classList.toggle("oculto");
+    userCard.classList.toggle("oculto")
 
     if (!userCard.classList.contains("oculto")) {
-      await cargarTarjetaUsuario();
+      await cargarTarjetaUsuario()
     }
-  });
+  })
 
   document.addEventListener("click", (e) => {
     if (!e.target.closest(".user-menu")) {
-      userCard.classList.add("oculto");
+      userCard.classList.add("oculto")
     }
-  });
+  })
 }
 
 async function cargarTarjetaUsuario() {
@@ -27,9 +29,9 @@ async function cargarTarjetaUsuario() {
     const response = await fetch(API + "/api/me", {
       method: "GET",
       credentials: "include"
-    });
+    })
 
-    const data = await response.json();
+    const data = await response.json()
 
     if (!response.ok) {
       userCard.innerHTML = `
@@ -37,8 +39,8 @@ async function cargarTarjetaUsuario() {
         <p>No has iniciado sesión.</p>
         <button class="btn-user" onclick="window.location.href='login.html'">Iniciar sesión</button>
         <button class="btn-user-sec" onclick="window.location.href='register.html'">Registrarse</button>
-      `;
-      return;
+      `
+      return
     }
 
     userCard.innerHTML = `
@@ -47,7 +49,7 @@ async function cargarTarjetaUsuario() {
       <p><strong>Correo:</strong> ${data.user.email}</p>
       <p><strong>Rol:</strong> ${data.user.rol}</p>
       <button class="btn-user" id="logoutBtn">Cerrar sesión</button>
-    `;
+    `
 
     const logoutBtn = document.getElementById("logoutBtn");
 
@@ -56,17 +58,17 @@ async function cargarTarjetaUsuario() {
         await fetch(API + "/api/logout", {
           method: "POST",
           credentials: "include"
-        });
+        })
 
         window.location.href = "login.html";
-      });
+      })
     }
 
   } catch (error) {
     userCard.innerHTML = `
       <h4>Mi cuenta</h4>
       <p>Error al cargar la información.</p>
-    `;
+    `
     console.error("ERROR USUARIO >>>", error);
   }
 }
@@ -75,3 +77,41 @@ async function cargarTarjetaUsuario() {
     AOS.init({
       once: true,
     });
+
+
+    function mostrarAdmin(){
+      const contenedor = document.querySelector(".header-iconos")
+
+      const iconoAdmin = document.createElement("a")
+      iconoAdmin.href = "admin.html"
+      iconoAdmin.innerHTML = `<i class="fa-solid fa-gear"></i>`
+
+      contenedor.appendChild(iconoAdmin)
+    }
+
+    async function verificarAdmin(){
+        
+      try{
+
+        const response = await fetch(API + "/api/me", {
+          credentials: "include"
+        })
+
+        const data = await response.json()
+
+        if(!response.ok){
+          return
+        }
+
+        if(data.user.rol === "Admin"){
+          mostrarAdmin()
+        }
+
+      } catch(error){
+        console.error("No se pudo verificar el rol del usuario" + error)
+      }
+
+    }
+
+    verificarAdmin()
+  
