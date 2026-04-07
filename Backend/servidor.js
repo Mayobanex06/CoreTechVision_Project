@@ -306,8 +306,7 @@ app.patch("/api/admin/producto/:id/inactivar", authMiddleware, adminMiddleware, 
 
     const { id } = req.params
 
-    const [result] = await pool.query(`
-      UPDATE productos SET estado = 0 WHERE id_producto = ?`
+    const [result] = await pool.query("UPDATE productos SET estado = 0 WHERE id_producto = ?",
     [id])
 
     if(result.affectedRows === 0){

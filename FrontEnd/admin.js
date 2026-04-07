@@ -213,3 +213,48 @@ function inicializarFiltros() {
   inputBusqueda.addEventListener("input", aplicarFiltros);
   selectMarca.addEventListener("change", aplicarFiltros);
 }
+
+// Bloque 9: Eliminar productos
+
+document.addEventListener("click", async (e)=>{
+
+  const btnEliminar = e.target.closest(".btn-eliminar")
+  
+  if(!btnEliminar) return
+
+  const id = btnEliminar.dataset.id
+
+  const confirmar = confirm("Esta seguro de que quiere eliminar este producto")
+
+  if(!confirmar) return
+
+  await desactivarProducto(id)
+
+})
+
+async function desactivarProducto(id){
+  try{
+    const response = await fetch(API2 + `/api/admin/producto/${id}/inactivar`, {
+      method: "PATCH",
+      credentials: "include"
+    })
+
+    console.log("STATUS INACTIVAR:", response.status);
+
+    const data = await response.json()
+
+    console.log("STATUS DATA:", data)
+
+    if(!response.ok || !data.ok){
+      throw new Error(data.error || "No se pudo desactivar el producto")
+    }
+
+    await cargarResumenAdmin()
+    await renderizarProductos()
+    aplicarFiltros()
+
+  }catch(error){
+    console.error("Error al desactivar el producto", error)
+  }
+
+}
