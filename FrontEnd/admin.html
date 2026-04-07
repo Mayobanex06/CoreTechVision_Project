@@ -147,6 +147,57 @@
             </div>
           </div>
         </div>
+        <div id="modalEditarProducto" class="modal oculto">
+          <div class="modal-contenido">
+            <div class="modal-header">
+              <h3>Editar producto</h3>
+              <button type="button" id="cerrarModalEditar" class="modal-cerrar">
+                ×
+              </button>
+            </div>
+
+            <form id="formEditarProducto" class="modal-form">
+              <input type="hidden" id="editarIdProducto" />
+
+              <label>
+                Nombre
+                <input type="text" id="editarNombre" required />
+              </label>
+
+              <label>
+                Marca
+                <select id="editarMarca" required>
+                  <option value="Samsung">Samsung</option>
+                  <option value="Apple">Apple</option>
+                  <option value="Xiaomi">Xiaomi</option>
+                </select>
+              </label>
+
+              <label>
+                Precio
+                <input type="number" id="editarPrecio" step="0.01" required />
+              </label>
+
+              <label>
+                Stock
+                <input type="number" id="editarStock" required />
+              </label>
+
+              <label>
+                Estado
+                <select id="editarEstado" required>
+                  <option value="1">Activo</option>
+                  <option value="0">Inactivo</option>
+                </select>
+              </label>
+
+              <div class="modal-acciones">
+                <button type="button" id="cancelarModalEditar">Cancelar</button>
+                <button type="submit">Guardar cambios</button>
+              </div>
+            </form>
+          </div>
+        </div>
       </section>
     </main>
 

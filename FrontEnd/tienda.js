@@ -55,7 +55,7 @@ function cargarProductos(lista) {
 
 async function obtenerProductos() {
   try {
-    const response = await fetch("http://localhost:3000/api/productos");
+    const response = await fetch("http://localhost:3000/api/tienda/productos");
     const data = await response.json();
     const mensaje = document.getElementById("mensaje-productos")
 

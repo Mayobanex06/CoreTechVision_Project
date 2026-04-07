@@ -216,6 +216,48 @@ app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`)
 })
 
+app.get("/api/tienda/productos", async (req, res) => {
+
+  try {
+
+    const [rows] = await pool.query(
+      `SELECT 
+        id_producto,
+        marca,
+        nombre,
+        precio,
+        imagen,
+        categoria,
+        stock
+      FROM productos
+      WHERE estado = 1
+      ORDER BY id_producto DESC`)
+
+    const productos = rows.map(producto =>({
+
+      id: producto.id_producto,
+      marca: producto.marca,
+      nombre: producto.nombre,
+      precio: Number(producto.precio),
+      imagen: producto.imagen,
+      categoria: producto.categoria,
+      stock: producto.stock
+
+}))
+
+    res.json({ok: true, productos })
+
+
+} catch(error){
+    console.error("Error productos >>>", error)
+    res.status(500).json({
+      ok: false,
+      error: "Error al obtener productos"
+    })
+}
+
+})
+
 app.get("/api/admin/productos", authMiddleware, adminMiddleware, async (req, res) => {
 
   try {
@@ -330,3 +372,34 @@ app.patch("/api/admin/producto/:id/inactivar", authMiddleware, adminMiddleware, 
     }
 
   })
+
+app.put("/api/admin/productos/:id", authMiddleware, adminMiddleware, async (req, res) => {
+
+  try{
+  const { id } = req.params
+  const { nombre, marca, precio, stock, estado } = req.body
+
+  const [result] = await pool.query("UPDATE productos SET nombre = ?, marca = ?, precio = ?, stock = ?, estado = ? WHERE id_producto = ?", 
+    [nombre, marca, precio, stock, estado, id])
+
+  if(result.affectedRows === 0){
+    return res.status(404).json({
+      ok: false,
+      error: "Producto a editar no encontrado"
+    })
+  }
+
+  res.json({
+    ok: true,
+    mensaje: "Producto editado correctamente"
+  })
+
+  }catch(error){
+    console.error("Error al editar el producto", error)
+    res.status(500).json({
+      ok: false,
+      error: "Error al editar el producto"
+    })
+  }
+
+})

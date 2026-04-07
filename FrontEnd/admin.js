@@ -160,7 +160,7 @@ async function cargarResumenAdmin() {
 }
 
 
-// Bloque : Solo confirma que todo esta ok antes de renderizar
+// Bloque 9: Solo confirma que todo esta ok antes de renderizar
 
 async function iniciarAdmin() {
   const accesoPermitido = await verificarAdmin()
@@ -175,7 +175,7 @@ async function iniciarAdmin() {
 
 iniciarAdmin()
 
-// Bloque 7: Filtro de productos
+// Bloque 8: Filtro de productos
 
 function aplicarFiltros() {
   const inputBusqueda = document.getElementById("adminSearch");
@@ -258,3 +258,79 @@ async function desactivarProducto(id){
   }
 
 }
+
+// Bloque 10: Botones de editar
+
+function abrirModalEditar(producto){
+  document.getElementById("editarIdProducto").value = producto.id
+  document.getElementById("editarNombre").value = producto.nombre
+  document.getElementById("editarPrecio").value = producto.precio
+  document.getElementById("editarStock").value = producto.stock
+  document.getElementById("editarEstado").value = String(producto.estado)
+
+  document.getElementById("modalEditarProducto").classList.remove("oculto")
+}
+
+function cerrarModalEditar(){
+  document.getElementById("modalEditarProducto").classList.add("oculto")
+}
+
+document.addEventListener("click", (e) => {
+  const btnEditar = e.target.closest(".btn-editar")
+  if(!btnEditar) return
+
+  const id = Number(btnEditar.dataset.id)
+  const producto = productos.find(p => p.id === id)
+
+  if(!producto){
+    console.error("No se encontro el producto para editar")
+    return
+  }
+
+  abrirModalEditar(producto)
+})
+
+document.getElementById("cerrarModalEditar")?.addEventListener("click", cerrarModalEditar);
+document.getElementById("cancelarModalEditar")?.addEventListener("click", cerrarModalEditar);
+
+document.getElementById("formEditarProducto")?.addEventListener("submit", async (e) =>{
+  e.preventDefault()
+  
+  const id = document.getElementById("editarIdProducto").value
+
+  const body = {
+    
+    nombre: document.getElementById("editarNombre").value.trim(),
+    marca: document.getElementById("editarMarca").value,
+    precio: Number(document.getElementById("editarPrecio").value),
+    stock: Number(document.getElementById("editarStock").value),
+    estado: Number(document.getElementById("editarEstado").value) 
+
+  }
+
+  try{
+
+    const response = await fetch(API2 + `/api/admin/productos/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    credentials: "include",
+    body: JSON.stringify(body)
+    })
+
+    const data = await response.json()
+
+    if(!response.ok || !data.ok){
+      throw new Error(data.error || "No se pudo actualizar el producto")
+    }
+
+    cerrarModalEditar()
+    await cargarResumenAdmin()
+    await renderizarProductos()
+    aplicarFiltros()
+
+  }catch(error){
+    console.error("Error al actualizar el producto", error)
+  }
+})
